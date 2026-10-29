@@ -1,6 +1,6 @@
 [project]
 name = "sni-hostname-extractor-py"
-version = "0.1.0"
+version = "0.1.1"
 description = "Extract SNI hostname from raw TLS ClientHello bytes using only the Python standard library."
 requires-python = ">=3.10"
 dependencies = []
