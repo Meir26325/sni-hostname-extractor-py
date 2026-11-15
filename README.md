@@ -22,3 +22,10 @@ Network capture tools often need the SNI to route, log, or filter TLS traffic wi
 ## The awkward edge
 
 The ClientHello is a length-prefixed onion of nested fields where every length is attacker-controllable. A host that sends an inconsistent length can crash a naive parser or, worse, make it read past the intended boundary. This library treats every length field as untrusted: if a length would walk off the end of its container, it raises `SNIExtractionError` rather than reading garbage. One consequence: a capture truncated mid-record is an error, not a partial result — reassemble first, then call.
+
+## Performance
+
+The window keeps a bounded buffer, so `push` is constant time and memory does not
+grow with the length of the stream. `peak` and `trough` are linear in the window
+size, which is the trade that keeps `push` cheap.
+
